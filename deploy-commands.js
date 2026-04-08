@@ -15,3 +15,5 @@ client.on('interactionCreate', async interaction => {
     await interaction.reply('FUNCIONANDO ✅');
   }
 });
+
+client.login("MTQ5MDkwNzMwNjMxNjEzNjQ1OA.GaIDdc.aZW8mm9TD7xVE1RfrJGmdjsOu_D3hzzeOYOGlg");

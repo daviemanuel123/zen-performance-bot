@@ -12,8 +12,7 @@ const client = new Client({
   intents: [GatewayIntentBits.Guilds]
 });
 
-const TOKEN = process.env.TOKEN;
-client.login(TOKEN);
+const TOKEN = "MTQ5MDkwNzMwNjMxNjEzNjQ1OA.GaIDdc.aZW8mm9TD7xVE1RfrJGmdjsOu_D3hzzeOYOGlg";
 
 client.once('ready', () => {
   console.log('Zen Performance PRO Online 🚀');
@@ -40,17 +39,17 @@ client.on('interactionCreate', async interaction => {
         const row = new ActionRowBuilder().addComponents(
           new ButtonBuilder()
             .setCustomId('basico')
-            .setLabel('💰 Básico - R$10')
+           .setLabel('💰 Básico - R$20')
             .setStyle(ButtonStyle.Success),
 
           new ButtonBuilder()
             .setCustomId('intermediario')
-            .setLabel('⚡ Intermediário - R$20')
+           .setLabel('⚡ Intermediário - R$40')
             .setStyle(ButtonStyle.Primary),
 
           new ButtonBuilder()
             .setCustomId('avancado')
-            .setLabel('🔥 Avançado - R$30')
+           .setLabel('🔥 Avançado - R$80')
             .setStyle(ButtonStyle.Danger)
         );
 
@@ -119,6 +118,8 @@ Olá ${interaction.user}
     console.error(error);
   }
 });
+
+client.login("MTQ5MDkwNzMwNjMxNjEzNjQ1OA.GaIDdc.aZW8mm9TD7xVE1RfrJGmdjsOu_D3hzzeOYOGlg");
 
 process.on('unhandledRejection', error => {
   console.error('Erro não tratado:', error);
