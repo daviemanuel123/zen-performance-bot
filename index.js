@@ -46,39 +46,80 @@ client.on('interactionCreate', async (interaction) => {
     }
   }
 
-  // BOTÕES (TICKET)
+  // BOTÕES
   if (interaction.isButton()) {
 
-    let plano = '';
-    if (interaction.customId === 'basico') plano = '💰 Básico - R$20';
-    if (interaction.customId === 'intermediario') plano = '⚡ Intermediário - R$40';
-    if (interaction.customId === 'avancado') plano = '🔥 Avançado - R$80';
+    // ===== ABRIR TICKET =====
+    if (['basico', 'intermediario', 'avancado'].includes(interaction.customId)) {
 
-    const canal = await interaction.guild.channels.create({
-      name: `ticket-${interaction.user.username}`,
-      type: ChannelType.GuildText,
-      permissionOverwrites: [
-        {
-          id: interaction.guild.id,
-          deny: [PermissionsBitField.Flags.ViewChannel]
-        },
-        {
-          id: interaction.user.id,
-          allow: [PermissionsBitField.Flags.ViewChannel]
-        }
-      ]
-    });
+      let plano = '';
+      if (interaction.customId === 'basico') plano = '💰 Básico - R$20';
+      if (interaction.customId === 'intermediario') plano = '⚡ Intermediário - R$40';
+      if (interaction.customId === 'avancado') plano = '🔥 Avançado - R$80';
 
-    await canal.send(`🚀 ${interaction.user}, seu ticket foi criado!
+      const canal = await interaction.guild.channels.create({
+        name: `ticket-${interaction.user.username}`,
+        type: ChannelType.GuildText,
+        permissionOverwrites: [
+          {
+            id: interaction.guild.id,
+            deny: [PermissionsBitField.Flags.ViewChannel]
+          },
+          {
+            id: interaction.user.id,
+            allow: [PermissionsBitField.Flags.ViewChannel]
+          }
+        ]
+      });
+
+      const botoes = new ActionRowBuilder().addComponents(
+        new ButtonBuilder()
+          .setCustomId('paguei')
+          .setLabel('💰 Já paguei')
+          .setStyle(ButtonStyle.Success),
+
+        new ButtonBuilder()
+          .setCustomId('fechar')
+          .setLabel('🔒 Fechar')
+          .setStyle(ButtonStyle.Danger)
+      );
+
+      await canal.send({
+        content: `🚀 ${interaction.user}, seu ticket foi criado!
 
 Plano: ${plano}
 
-💰 Envie o comprovante para iniciar.`);
+💰 Envie o comprovante para iniciar.`,
+        components: [botoes]
+      });
 
-    await interaction.reply({
-      content: `✅ Ticket criado: ${canal}`,
-      ephemeral: true
-    });
+      await interaction.reply({
+        content: `✅ Ticket criado: ${canal}`,
+        ephemeral: true
+      });
+    }
+
+    // ===== JÁ PAGUEI =====
+    if (interaction.customId === 'paguei') {
+      await interaction.reply({
+        content: '✅ Pagamento recebido! Aguarde atendimento.',
+        ephemeral: true
+      });
+
+      interaction.channel.send('💰 Cliente informou pagamento!');
+    }
+
+    // ===== FECHAR =====
+    if (interaction.customId === 'fechar') {
+      await interaction.reply({
+        content: '🔒 Fechando ticket...',
+        ephemeral: true
+      });
+
+      setTimeout(() => {
+        interaction.channel.delete();
+      }, 3000);
+    }
   }
 
 });
