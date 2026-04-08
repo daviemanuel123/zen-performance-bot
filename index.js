@@ -123,7 +123,8 @@ Olá ${interaction.user}
   }
 });
 
-client.login("MTQ5MDkwNzMwNjMxNjEzNjQ1OA.GTiSKc.nVrpwr8QE-lpGeC3vMvG__7fSO-j886yWrgeCE");
+const TOKEN = process.env.TOKEN;
+client.login(TOKEN);
 
 process.on('unhandledRejection', error => {
   console.error('Erro não tratado:', error);
