@@ -12,7 +12,8 @@ const client = new Client({
   intents: [GatewayIntentBits.Guilds]
 });
 
-const TOKEN = "MTQ5MDkwNzMwNjMxNjEzNjQ1OA.GaIDdc.aZW8mm9TD7xVE1RfrJGmdjsOu_D3hzzeOYOGlg";
+const TOKEN = process.env.TOKEN;
+client.login(TOKEN);
 
 client.once('ready', () => {
   console.log('Zen Performance PRO Online 🚀');
@@ -118,8 +119,6 @@ Olá ${interaction.user}
     console.error(error);
   }
 });
-
-client.login("MTQ5MDkwNzMwNjMxNjEzNjQ1OA.GaIDdc.aZW8mm9TD7xVE1RfrJGmdjsOu_D3hzzeOYOGlg");
 
 process.on('unhandledRejection', error => {
   console.error('Erro não tratado:', error);
